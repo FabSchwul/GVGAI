@@ -1,8 +1,5 @@
 package TSI;
 
-import java.util.ArrayList;
-import java.util.Collections;
-
 import core.game.Observation;
 import core.game.StateObservation;
 import core.player.AbstractPlayer;
@@ -11,7 +8,10 @@ import ontology.Types.ACTIONS;
 import tools.ElapsedCpuTimer;
 import tools.Vector2d;
 
-public class myAgent_Camel extends AbstractPlayer{
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class myAgent_Camel extends AbstractPlayer {
     //Greedy Camel:
     // 1) Busca la puerta más cercana.
     // 2) Escoge la accion que minimiza la distancia del camello a la puerta.
@@ -21,12 +21,13 @@ public class myAgent_Camel extends AbstractPlayer{
 
     /**
      * initialize all variables for the agent
-     * @param stateObs Observation of the current state.
+     *
+     * @param stateObs     Observation of the current state.
      * @param elapsedTimer Timer when the action returned is due.
      */
-    public myAgent_Camel(StateObservation stateObs, ElapsedCpuTimer elapsedTimer){
+    public myAgent_Camel(StateObservation stateObs, ElapsedCpuTimer elapsedTimer) {
         //Calculamos el factor de escala entre mundos (pixeles -> grid)
-        fescala = new Vector2d(stateObs.getWorldDimension().width / stateObs.getObservationGrid().length ,
+        fescala = new Vector2d(stateObs.getWorldDimension().width / stateObs.getObservationGrid().length,
                 stateObs.getWorldDimension().height / stateObs.getObservationGrid()[0].length);
 
         //Se crea una lista de observaciones de portales, ordenada por cercania al avatar
@@ -39,23 +40,24 @@ public class myAgent_Camel extends AbstractPlayer{
 
     /**
      * return the best action to arrive faster to the closest portal
-     * @param stateObs Observation of the current state.
+     *
+     * @param stateObs     Observation of the current state.
      * @param elapsedTimer Timer when the action returned is due.
-     * @return best	ACTION to arrive faster to the closest portal
+     * @return best    ACTION to arrive faster to the closest portal
      */
     @Override
     public ACTIONS act(StateObservation stateObs, ElapsedCpuTimer elapsedTimer) {
         //Posicion del avatar
-        Vector2d avatar =  new Vector2d(stateObs.getAvatarPosition().x / fescala.x,
+        Vector2d avatar = new Vector2d(stateObs.getAvatarPosition().x / fescala.x,
                 stateObs.getAvatarPosition().y / fescala.y);
 
         //Probamos las cuatro acciones y calculamos la distancia del nuevo estado al portal.
         Vector2d newPos_up = avatar, newPos_down = avatar, newPos_left = avatar, newPos_right = avatar;
         if (avatar.y - 1 >= 0) {
-            newPos_up = new Vector2d(avatar.x, avatar.y-1);
+            newPos_up = new Vector2d(avatar.x, avatar.y - 1);
         }
-        if (avatar.y + 1 <= stateObs.getObservationGrid()[0].length-1) {
-            newPos_down = new Vector2d(avatar.x, avatar.y+1);
+        if (avatar.y + 1 <= stateObs.getObservationGrid()[0].length - 1) {
+            newPos_down = new Vector2d(avatar.x, avatar.y + 1);
         }
         if (avatar.x - 1 >= 0) {
             newPos_left = new Vector2d(avatar.x - 1, avatar.y);
@@ -66,10 +68,10 @@ public class myAgent_Camel extends AbstractPlayer{
 
         //Manhattan distance
         ArrayList<Integer> distances = new ArrayList<Integer>();
-        distances.add((int) (Math.abs(newPos_up.x - portal.x) + Math.abs(newPos_up.y-portal.y)));
-        distances.add((int) (Math.abs(newPos_down.x - portal.x) + Math.abs(newPos_down.y-portal.y)));
-        distances.add((int) (Math.abs(newPos_left.x - portal.x) + Math.abs(newPos_left.y-portal.y)));
-        distances.add((int) (Math.abs(newPos_right.x - portal.x) + Math.abs(newPos_right.y-portal.y)));
+        distances.add((int) (Math.abs(newPos_up.x - portal.x) + Math.abs(newPos_up.y - portal.y)));
+        distances.add((int) (Math.abs(newPos_down.x - portal.x) + Math.abs(newPos_down.y - portal.y)));
+        distances.add((int) (Math.abs(newPos_left.x - portal.x) + Math.abs(newPos_left.y - portal.y)));
+        distances.add((int) (Math.abs(newPos_right.x - portal.x) + Math.abs(newPos_right.y - portal.y)));
 
         // Nos quedamos con el menor y tomamos esa accion.
         int minIndex = distances.indexOf(Collections.min(distances));
