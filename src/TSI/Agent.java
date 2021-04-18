@@ -68,7 +68,7 @@ public class Agent extends AbstractPlayer {
         Vector2d posicion_actual = stateObs.getAvatarPosition().mul(1.0 / stateObs.getBlockSize()); // Posición actual del jugador
 
         if (camino.empty()){
-            backTrack(pathfindAStar(stateObs, stateObs.getAvatarPosition().mul(1.0 / stateObs.getBlockSize()), portal));
+            backTrack(pathfindAStar(stateObs, posicion_actual, portal));
         }
 
         if (!camino.empty() && elapsedTimer.remainingTimeMillis() > 0){
