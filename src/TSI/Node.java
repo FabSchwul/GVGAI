@@ -20,7 +20,7 @@ public class Node implements Comparable<Node> {
     public Node parent;
     public Vector2d position;
     public int id;
-    //public int orientation = -1;
+
 
     public Node(Vector2d pos)
     {

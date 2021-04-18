@@ -65,6 +65,7 @@ public class Agent extends AbstractPlayer {
     @Override
     public Types.ACTIONS act(StateObservation stateObs, ElapsedCpuTimer elapsedTimer) {
         Types.ACTIONS accion = Types.ACTIONS.ACTION_NIL; // Acción por defecto
+        Vector2d posicion_actual = stateObs.getAvatarPosition().mul(1.0 / stateObs.getBlockSize()); // Posición actual del jugador
 
         if (camino.empty()){
             backTrack(pathfindAStar(stateObs, stateObs.getAvatarPosition().mul(1.0 / stateObs.getBlockSize()), portal));
@@ -76,7 +77,6 @@ public class Agent extends AbstractPlayer {
 
         }
         return accion;
-
     }
 
     /**
@@ -161,6 +161,7 @@ public class Agent extends AbstractPlayer {
                         hijo.parent = menor_coste;
                         hijo.totalCost = menor_coste.totalCost + 1.0;
                         hijo.estimatedCost = calcularH(hijo, fin);
+                        hijo.id = ((int)(hijo.position.x) * 100 + (int)(hijo.position.y));
 
                         if (!listaAbiertos.contains(hijo) && !listaCerrados.contains(hijo)) {
                             listaAbiertos.add(hijo);
@@ -204,5 +205,6 @@ public class Agent extends AbstractPlayer {
             }
             resultado = resultado.parent;
         }
+
     }
 }

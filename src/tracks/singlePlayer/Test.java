@@ -25,6 +25,8 @@ public class Test {
         String sampleRHEAController = "tracks.singlePlayer.advanced.sampleRHEA.Agent";
 		String sampleOLETSController = "tracks.singlePlayer.advanced.olets.Agent";
 		String controller = "TSI.Agent";
+		String antonio = "TSIAntonio.Agent";
+		String manza = "src_manzanares_lemus_alejandro.Agent";
 		String camelController = "TSI.myAgent_Camel";
 
 		//Load available games
